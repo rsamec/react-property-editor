@@ -1,0 +1,45 @@
+{
+  "name": "react-property-editor",
+  "version": "0.1.2",
+  "private": false,
+  "description": "React property editor.",
+  "main": "lib/PropertyEditor.js",
+  "author": "Roman Samec (roman.samec2@gmail.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/rsamec/react-property-editor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rsamec/react-property-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rsamec/react-property-editor/issues"
+  },
+  "dependencies": {
+    "react": "^0.13.3",
+    "react-color-picker": "^2.1.9",
+    "react-json": "0.0.1",
+    "reactify": "^1.1.1",
+    "underscore": "^1.8.3",
+    "underscore.deepclone": "^0.1.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "codemirror": "^5.5.0",
+    "react-code-mirror": "^3.0.4",
+    "react-component-gulp-tasks": "^0.7.0"
+  },
+  "peerDependencies": {},
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "browser": "lib/PropertyEditor.js",
+  "browserify-shim": {
+    "react": "global:React"
+  },
+  "scripts": {
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "keywords": []
+}
