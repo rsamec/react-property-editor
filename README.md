@@ -1,8 +1,6 @@
 React property editor
 =======================
 
-These component offers react components - charts (Pie,Bar,SmoothLine,StockLine,Scatterplot,Tree,Radar) using [paths-js](https://github.com/andreaferretti/paths-js).
-
 It is based on [react-json](https://github.com/arqex/react-json) and offers some predefined editors.
 
 +   html editor - [react-tinymce](https://github.com/mzabriskie/react-tinymce)
