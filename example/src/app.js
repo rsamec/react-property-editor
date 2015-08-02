@@ -133,10 +133,12 @@ var App = React.createClass({
     getInitialState(){
         return {
             value: {
-                name: "amigo",
-                color: '',
-                html: '',
-                code: '',
+                name: "chartProfits",
+                description: "The example React app is rendered above.",
+                color: undefined,
+                html: undefined ,
+                code: 'function(){}',
+                data:{text:'ahoj'},
                 options: {
                     width:600,
                     height:600,

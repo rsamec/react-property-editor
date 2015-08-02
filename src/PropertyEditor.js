@@ -5,11 +5,16 @@ import _ from 'lodash';
 import ColorPickerEditor from './editors/ColorPickerEditor.js';
 import HtmlEditor from './editors/HtmlEditor.js';
 import CodeEditor from './editors/CodeEditor.js';
+import PlainTextEditor from './editors/PlainTextEditor.js';
+import PlainJsonEditor from './editors/PlainJsonEditor.js';
+import JsonEditor from './editors/JsonEditor.js';
 
 // Register the type in react-json
 Json.registerType('colorPicker', ColorPickerEditor);
 Json.registerType('htmlEditor', HtmlEditor);
 Json.registerType('codeEditor',CodeEditor);
+Json.registerType('textEditor',PlainTextEditor);
+Json.registerType('jsonEditor',JsonEditor);
 
 var defaultSettings = {
     form: true,
@@ -22,7 +27,9 @@ var defaultSettings = {
         stroke:{type:'colorPicker'},
         html:{type:'htmlEditor'},
         content:{type:'htmlEditor'},
-        code:{type:'codeEditor'}
+        code:{type:'codeEditor'},
+        data:{type:'jsonEditor'},
+        description:{type:'textEditor'}
     }
 };
 

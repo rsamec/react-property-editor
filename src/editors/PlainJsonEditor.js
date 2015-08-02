@@ -1,25 +1,18 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import {Modal,Button} from 'react-bootstrap';
 
-var CodeMirror = require('react-code-mirror');
-var SyntaxHighLight = require('codemirror/mode/javascript/javascript');
+//import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
-export default class CodeEditor extends React.Component {
-
+export default class PlainJsonEditor extends React.Component {
     //static propTypes = {onClose: PropTypes.func}
     constructor(props) {
         super(props);
-        this.state = {show: false, value: this.props.value};
+        this.state = {show: false, value: JSON.stringify(this.props.value,null,2)};
     }
 
     close() {
-        //var editor = React.findDOMNode(this.refs.editor);
-        //var codeToCompile = '(function() {' + value + '})();';
-        //var code = ReactTools.transform(codeToCompile,{harmony: true});
-        //var code = JSXTransformer.transform(codeToCompile,{harmony: true}).code;
-
-        this.props.onUpdated(this.state.value);
+        this.props.onUpdated(JSON.parse(this.state.value));
         this.setState({showModal: false});
     }
 
@@ -32,17 +25,6 @@ export default class CodeEditor extends React.Component {
     }
 
     render() {
-
-        var codeMirrorComponent = React.createElement(CodeMirror, {
-            style: {border: '1px solid black'},
-            textAreaClassName: ['form-control'],
-            textAreaStyle: {minHeight: '10em'},
-            value: this.state.value,
-            mode: 'javascript',
-            theme: 'solarized',
-            lineNumbers: true,
-            onChange: this.handleChange.bind(this)
-        });
         return (
             <table>
                 <tr>
@@ -51,10 +33,10 @@ export default class CodeEditor extends React.Component {
                         <Modal show={this.state.showModal} onHide={this.close.bind(this)} bsSize='large'
                                aria-labelledby='contained-modal-title-lg'>
                             <Modal.Header closeButton>
-                                <Modal.Title id='contained-modal-title-lg'>Javascript editor - (code mirror)</Modal.Title>
+                                <Modal.Title id='contained-modal-title-lg'>Simple json editor</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                {codeMirrorComponent}
+                                <textarea rows="10" cols="70" value={this.state.value}  onChange={this.handleChange.bind(this)} />
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button onClick={this.close.bind(this)}>Close</Button>
@@ -63,11 +45,11 @@ export default class CodeEditor extends React.Component {
                     </td>
                     <td>
                         <div>
-                             <TruncateString value={this.props.value}/>
+                            <TruncateString value={this.props.value}/>
                         </div>
                     </td>
                 </tr>
             </table>
         );
     }
-}
+};
