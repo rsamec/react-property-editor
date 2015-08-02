@@ -30,11 +30,6 @@ export default class HtmlEditor extends React.Component {
             <table>
                 <tr>
                     <td>
-                        <div>
-                            <TruncateString value={this.props.value}/>
-                        </div>
-                    </td>
-                    <td>
                         <a onClick={this.open.bind(this)}>[...]</a>
                         <Modal show={this.state.showModal} onHide={this.close.bind(this)} bsSize='large'
                                aria-labelledby='contained-modal-title-lg'>
@@ -65,7 +60,11 @@ export default class HtmlEditor extends React.Component {
                                 <Button onClick={this.close.bind(this)}>Close</Button>
                             </Modal.Footer>
                         </Modal>
-
+                    </td>
+                    <td>
+                        <div>
+                            <TruncateString value={this.props.value}/>
+                        </div>
                     </td>
                 </tr>
             </table>
