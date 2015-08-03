@@ -12,6 +12,7 @@ import FontEditor from './editors/FontEditor.js';
 import BoxEditor from './editors/BoxEditor.js';
 import BorderEditor from './editors/BorderEditor.js';
 import PositionEditor from './editors/PositionEditor.js';
+import BindingEditor from './editors/BindingEditor.js';
 
 // Register the type in react-json
 Json.registerType('colorPicker', ColorPickerEditor);
@@ -23,6 +24,7 @@ Json.registerType('fontEditor',FontEditor);
 Json.registerType('boxEditor',BoxEditor);
 Json.registerType('positionEditor',PositionEditor);
 Json.registerType('borderEditor',BorderEditor);
+Json.registerType('bindingEditor',BindingEditor);
 
 var defaultSettings = {
     form: true,
@@ -41,7 +43,9 @@ var defaultSettings = {
         border:{type:'borderEditor'},
         style:{type:'positionEditor'},
         margin:{type:'boxEditor'},
-        padding:{type:'boxEditor'}
+        padding:{type:'boxEditor'},
+        binding:{type:'bindingEditor'},
+        value:{type:'bindingEditor'}
     }
 };
 

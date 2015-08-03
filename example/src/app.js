@@ -82,6 +82,7 @@ var chartSettings = {
     fields: {
         options:{
             fields:{
+                data:{type:'bindingEditor'},
                 fill: {type: 'colorPicker'},
                 color: {type: 'colorPicker'},
                 stroke: {type: 'colorPicker'},
@@ -123,6 +124,7 @@ var App = React.createClass({
                 font:undefined,
                 style:{},
                 options: {
+                    data:{},
                     width:600,
                     height:600,
                     color:'#2980B9',
