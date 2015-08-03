@@ -7,14 +7,6 @@ import Json from 'react-json';
 
 //Json.registerType('colorPicker',ColorPickerWrapper);
 
-var fontFamilies =[
-    'Arial',
-    'Verdana',
-    'Helvetica',
-    'Times New Roman',
-    'Courier New',
-    'Papyrus'
-]
 
 var TickValues = React.createClass({
     mixins: [BindToMixin],
@@ -80,19 +72,7 @@ var TickValuesWrapper = React.createClass({
 
 Json.registerType('tickValues',TickValuesWrapper);
 
-var labelOptions= {
-    fields: {
-        fontFamily: {
-            type: 'select', settings: {
-                options: _.map(fontFamilies, function (key, value) {
-                    return {value: key, label: key};
-                })
-            }
-        },
-        fill: {type: 'colorPicker'}
 
-    }
-};
 
 // form: true
 // make objects not extensible,
@@ -105,8 +85,9 @@ var chartSettings = {
                 fill: {type: 'colorPicker'},
                 color: {type: 'colorPicker'},
                 stroke: {type: 'colorPicker'},
+                margin:{type:'boxEditor'},
                 legendPosition: {type: 'select', settings: {options: ['topLeft','topRight','bottomLeft','bottomRight']}},
-                label:labelOptions,
+                label:{type:'fontEditor'},
                 animate:{
                     fields:{type:{type:'select',  settings: {options: ['delayed','async','oneByOne']}}}}
                 ,
@@ -114,14 +95,14 @@ var chartSettings = {
                     fields: {
                         orient: {type: 'select', settings: {options: ['left', 'right']}},
                         tickValues: {type: 'tickValues'},
-                        label:labelOptions
+                        label:{type:'fontEditor'},
                     }
                 },
                 axisX: {
                     fields: {
                         orient: {type: 'select', settings: {options: ['top', 'bottom']}},
                         tickValues: {type: 'tickValues'},
-                        label: labelOptions
+                        label: {type:'fontEditor'}
                     }
                 }
             }
@@ -137,8 +118,10 @@ var App = React.createClass({
                 description: "The example React app is rendered above.",
                 color: undefined,
                 html: undefined ,
-                code: 'function(){}',
+                content: {code:'return (<div></div>)'},
                 data:{text:'ahoj'},
+                font:undefined,
+                style:{},
                 options: {
                     width:600,
                     height:600,
@@ -156,12 +139,7 @@ var App = React.createClass({
                         zeroAxis: false,
                         orient: 'bottom',
                         tickValues:[],
-                        label:{
-                            fontFamily:'Arial',
-                            fontSize:14,
-                            fontWeight:true,
-                            fill:'#34495E'
-                        }
+                        label:{}
                     },
                     axisY: {
                         showAxis: true,
@@ -172,10 +150,7 @@ var App = React.createClass({
                         orient: 'left',
                         tickValues:[],
                         label:{
-                            fontFamily:'Arial',
-                            fontSize:14,
-                            fontWeight:true,
-                            fill:'#34495E'
+                            fontFamily:'Verdana'
                         }
                     }
                 },
@@ -189,6 +164,8 @@ var App = React.createClass({
     render() {
         return (<div>
             <PropertyEditor value={ this.state.value } settings={chartSettings} onChange={ this.logChange } />
+            <hr/>
+            <pre>{JSON.stringify(this.state.value,null,2)}</pre>
         </div>)
     }
 });

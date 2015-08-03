@@ -8,6 +8,10 @@ import CodeEditor from './editors/CodeEditor.js';
 import PlainTextEditor from './editors/PlainTextEditor.js';
 import PlainJsonEditor from './editors/PlainJsonEditor.js';
 import JsonEditor from './editors/JsonEditor.js';
+import FontEditor from './editors/FontEditor.js';
+import BoxEditor from './editors/BoxEditor.js';
+import BorderEditor from './editors/BorderEditor.js';
+import PositionEditor from './editors/PositionEditor.js';
 
 // Register the type in react-json
 Json.registerType('colorPicker', ColorPickerEditor);
@@ -15,6 +19,10 @@ Json.registerType('htmlEditor', HtmlEditor);
 Json.registerType('codeEditor',CodeEditor);
 Json.registerType('textEditor',PlainTextEditor);
 Json.registerType('jsonEditor',JsonEditor);
+Json.registerType('fontEditor',FontEditor);
+Json.registerType('boxEditor',BoxEditor);
+Json.registerType('positionEditor',PositionEditor);
+Json.registerType('borderEditor',BorderEditor);
 
 var defaultSettings = {
     form: true,
@@ -26,10 +34,14 @@ var defaultSettings = {
         fill:{type:'colorPicker'},
         stroke:{type:'colorPicker'},
         html:{type:'htmlEditor'},
-        content:{type:'htmlEditor'},
-        code:{type:'codeEditor'},
+        content:{type:'codeEditor'},
         data:{type:'jsonEditor'},
-        description:{type:'textEditor'}
+        description:{type:'textEditor'},
+        font:{type:'fontEditor'},
+        border:{type:'borderEditor'},
+        style:{type:'positionEditor'},
+        margin:{type:'boxEditor'},
+        padding:{type:'boxEditor'}
     }
 };
 

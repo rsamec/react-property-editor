@@ -1,6 +1,7 @@
 import React from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import {Modal,Button} from 'react-bootstrap';
+var babel = require('babel-core');
 
 var CodeMirror = require('react-code-mirror');
 var SyntaxHighLight = require('codemirror/mode/javascript/javascript');
@@ -10,16 +11,19 @@ export default class CodeEditor extends React.Component {
     //static propTypes = {onClose: PropTypes.func}
     constructor(props) {
         super(props);
-        this.state = {show: false, value: this.props.value};
+        var code = this.props.value && this.props.value.code || '';
+        this.state = {show: false, value: code};
     }
 
     close() {
         //var editor = React.findDOMNode(this.refs.editor);
-        //var codeToCompile = '(function() {' + value + '})();';
+        var codeToCompile = '(function() {' + this.state.value + '})();';
         //var code = ReactTools.transform(codeToCompile,{harmony: true});
         //var code = JSXTransformer.transform(codeToCompile,{harmony: true}).code;
 
-        this.props.onUpdated(this.state.value);
+        var result =  babel.transform(codeToCompile,{});
+        var newValue = {code:this.state.value,compiled:result.code};
+        this.props.onUpdated(newValue);
         this.setState({showModal: false});
     }
 
