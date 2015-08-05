@@ -3,15 +3,140 @@ import _ from 'underscore';
 import PropertyEditor from 'react-property-editor';
 import BindToMixin from 'react-binding';
 import Json from 'react-json';
-//import TinyMce from 'react-tinymce';
+import WidgetFactory from './WidgetFactory.js';
+import WidgetRenderer from './WidgetRenderer.js';
 
+//react bootstrap
+import {Button,Input,Panel,Glyphicon,Label,Alert,Well} from 'react-bootstrap';
+
+//react-pathjs-chart
+import {Pie,Bar, SmoothLine,StockLine,Scatterplot,Tree,Radar} from 'react-pathjs-chart';
+import ChartProps from './ChartProps.js';
+
+//react-designer-widgets
+import DesignerWidgets from 'react-designer-widgets';
+var designerWidgets = new DesignerWidgets().getWidgets();
+
+var widgetFactory = new WidgetFactory();
+
+widgetFactory.registerWidget('Chart.Pie', _.extend(Pie, {metaData: ChartProps['Chart.Pie']}));
+widgetFactory.registerWidget('Chart.SmoothLine', _.extend(SmoothLine, {metaData: ChartProps['Chart.SmoothLine']}));
+widgetFactory.registerWidget('Chart.Bar', _.extend(Bar, {metaData: ChartProps['Chart.Bar']}));
+
+const defaultImageUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
+widgetFactory.registerWidget('ImageBox', _.extend(designerWidgets['ImageBox'], {
+    metaData: {
+        props: {
+            style: {},
+            url: defaultImageUrl,
+            radius: 5
+        }
+    }
+}));
+widgetFactory.registerWidget('ImagePanel', _.extend(designerWidgets['ImagePanel'], {
+    metaData: {
+        props: {
+            style: {},
+            imageUrl: defaultImageUrl,
+            imageWidth: 100,
+            imageHeight: 100,
+            imageAlign: 'topRight',
+            content: 'type your content',
+            imageRadius: 5,
+            bgColor: '',
+            color: '',
+            imageMargin: 5,
+            padding: 5
+        }
+    }
+}));
+
+var bootstrapSettings = {
+    fields:{
+        content:{type:'string'},
+        bsSize:{type:'select',settings: {
+            options: _.map(['large','medium','small','xsmall'], function (key, value) {
+                return {value: key, label: key};
+            })
+        }},
+        bsStyle:{type:'select',settings: {
+            options: _.map(['default','primary','success','info','warning','danger','link'], function (key, value) {
+                return {value: key, label: key};
+            })
+        }}
+    }
+};
+
+widgetFactory.registerWidget('react-bootstrap.Button', _.extend(Button, {
+    metaData: {
+        props: {
+            bsSize: 'medium', bsStyle: 'default', content: 'Type content'
+        },
+        settings:bootstrapSettings
+    }
+}));
+widgetFactory.registerWidget('react-bootstrap.Label', _.extend(Label, {
+    metaData: {
+        props: {
+            bsSize: 'medium', bsStyle: 'default', content: 'Type content'
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+widgetFactory.registerWidget('react-bootstrap.Panel', _.extend(Panel, {
+    metaData: {
+        props: {
+            header:"Header",bsStyle: 'default', content: 'Type content'
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+widgetFactory.registerWidget('react-bootstrap.Glyphicon', _.extend(Glyphicon, {
+    metaData: {
+        props: {
+            bsSize: 'medium', bsStyle: 'default', glyph: 'star'
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+widgetFactory.registerWidget('react-bootstrap.Alert', _.extend(Alert, {
+    metaData: {
+        props: {
+            bsSize: 'medium', bsStyle: 'default', content: 'Type content'
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+widgetFactory.registerWidget('react-bootstrap.Well', _.extend(Well, {
+    metaData: {
+        props: {
+            bsSize: 'medium', bsStyle: 'default', content: 'Type content'
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+widgetFactory.registerWidget('react-bootstrap.Input', _.extend(Input, {
+    metaData: {
+        props: {
+            type: 'text',placeholder:'type your text', label:'label', help:'',value:''
+        },
+        settings:bootstrapSettings
+    }
+}));
+
+var widgets = widgetFactory.widgets;
 //Json.registerType('colorPicker',ColorPickerWrapper);
 
 
 var TickValues = React.createClass({
     mixins: [BindToMixin],
     onChange(){
-        if (this.props.onChange!== undefined) this.props.onChange();
+        if (this.props.onChange !== undefined) this.props.onChange();
     },
     add(){
         this.props.tickValues.add({value: 0});
@@ -24,7 +149,7 @@ var TickValues = React.createClass({
     clear(){
 
         var source = this.props.tickValues.sourceObject;
-        source.splice(0,source.length);
+        source.splice(0, source.length);
         this.props.tickValues.notifyChange();
 
         this.onChange();
@@ -39,8 +164,8 @@ var TickValues = React.createClass({
             <table>
                 <tr>
                     {items.map(function (item, index) {
-                        var valueLink =this.bindTo(item,'value');
-                        var handleChange = function(e){
+                        var valueLink = this.bindTo(item, 'value');
+                        var handleChange = function (e) {
                             valueLink.value = e.target.value;
                             this.onChange();
                         }.bind(this);
@@ -59,19 +184,22 @@ var TickValues = React.createClass({
 var TickValuesWrapper = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        return {tickValues:_.map(this.props.value,function(item){return _.clone(item)})}
+        return {
+            tickValues: _.map(this.props.value, function (item) {
+                return _.clone(item)
+            })
+        }
     },
     render: function () {
         var bindToArray = this.bindArrayToState('tickValues');
-        return (<TickValues tickValues={bindToArray}  onChange={this.handleChange}></TickValues>)
+        return (<TickValues tickValues={bindToArray} onChange={this.handleChange}></TickValues>)
     },
     handleChange: function () {
         this.props.onUpdated(this.state.tickValues);
     }
 });
 
-Json.registerType('tickValues',TickValuesWrapper);
-
+Json.registerType('tickValues', TickValuesWrapper);
 
 
 // form: true
@@ -80,30 +208,34 @@ Json.registerType('tickValues',TickValuesWrapper);
 // and inputs always visible
 var chartSettings = {
     fields: {
-        options:{
-            fields:{
-                data:{type:'bindingEditor'},
+        options: {
+            fields: {
+                data: {type: 'bindingEditor'},
                 fill: {type: 'colorPicker'},
                 color: {type: 'colorPicker'},
                 stroke: {type: 'colorPicker'},
-                margin:{type:'boxEditor'},
-                legendPosition: {type: 'select', settings: {options: ['topLeft','topRight','bottomLeft','bottomRight']}},
-                label:{type:'fontEditor'},
-                animate:{
-                    fields:{type:{type:'select',  settings: {options: ['delayed','async','oneByOne']}}}}
+                margin: {type: 'boxEditor'},
+                legendPosition: {
+                    type: 'select',
+                    settings: {options: ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']}
+                },
+                label: {type: 'fontEditor'},
+                animate: {
+                    fields: {type: {type: 'select', settings: {options: ['delayed', 'async', 'oneByOne']}}}
+                }
                 ,
                 axisY: {
                     fields: {
                         orient: {type: 'select', settings: {options: ['left', 'right']}},
                         tickValues: {type: 'tickValues'},
-                        label:{type:'fontEditor'},
+                        label: {type: 'fontEditor'},
                     }
                 },
                 axisX: {
                     fields: {
                         orient: {type: 'select', settings: {options: ['top', 'bottom']}},
                         tickValues: {type: 'tickValues'},
-                        label: {type:'fontEditor'}
+                        label: {type: 'fontEditor'}
                     }
                 }
             }
@@ -111,64 +243,339 @@ var chartSettings = {
     }
 };
 
+var options = [
+    {value: 'Chart.Pie', name: 'Pie'},
+    {value: 'Chart.SmoothLine', name: 'SmoothLine'},
+    {value: 'Chart.Bar', name: 'Bar'},
+    {value: 'ImageBox', name: 'ImageBox'},
+    {value: 'ImagePanel', name: 'ImagePanel'},
+    {value: 'react-bootstrap.Button', name: 'Button'},
+    {value: 'react-bootstrap.Label', name: 'Label'},
+    {value: 'react-bootstrap.Panel', name: 'Panel'},
+    {value: 'react-bootstrap.Alert', name: 'Alert'},
+    {value: 'react-bootstrap.Glyphicon', name: 'Glyphicon'},
+    {value: 'react-bootstrap.Input', name: 'Input'},
+    {value: 'react-bootstrap.Well', name: 'Well'}
+
+];
+
+
 var App = React.createClass({
+    mixins: [BindToMixin],
     getInitialState(){
+        var widget = widgets['Chart.Pie'];
         return {
-            value: {
-                name: "chartProfits",
-                description: "The example React app is rendered above.",
-                color: undefined,
-                html: undefined ,
-                content: {code:'return (<div></div>)'},
-                data:{text:'ahoj'},
-                font:undefined,
-                style:{},
-                options: {
-                    data:{},
-                    width:600,
-                    height:600,
-                    color:'#2980B9',
-                    margin: {top: 40, left: 60, bottom: 50, right: 20},
-                    animate:{
-                        type:'delayed',
-                        duration:200
+            data: {
+                pie: [
+                    {
+                        "name": "Goiás",
+                        "population": 6347114
                     },
-                    axisX: {
-                        showAxis: true,
-                        showLines: true,
-                        showLabels: true,
-                        showTicks: true,
-                        zeroAxis: false,
-                        orient: 'bottom',
-                        tickValues:[],
-                        label:{}
+                    {
+                        "name": "Ceará",
+                        "population": 7333886
                     },
-                    axisY: {
-                        showAxis: true,
-                        showLines: true,
-                        showLabels: true,
-                        showTicks: true,
-                        zeroAxis: false,
-                        orient: 'left',
-                        tickValues:[],
-                        label:{
-                            fontFamily:'Verdana'
-                        }
+                    {
+                        "name": "Acre",
+                        "population": 9498281
+                    },
+                    {
+                        "name": "Goiás",
+                        "population": 9362211
+                    },
+                    {
+                        "name": "Acre",
+                        "population": 4775630
                     }
-                },
-                array: [1, 2, 3]
+                ],
+                bar: [
+                    [
+                        {
+                            "v": 15,
+                            "name": "apple"
+                        },
+                        {
+                            "v": 41,
+                            "name": "apple"
+                        },
+                        {
+                            "v": 41,
+                            "name": "apple"
+                        },
+                        {
+                            "v": 10,
+                            "name": "apple"
+                        }
+                    ],
+                    [
+                        {
+                            "v": 69,
+                            "name": "banana"
+                        },
+                        {
+                            "v": 57,
+                            "name": "banana"
+                        },
+                        {
+                            "v": 48,
+                            "name": "banana"
+                        },
+                        {
+                            "v": 41,
+                            "name": "banana"
+                        }
+                    ],
+                    [
+                        {
+                            "v": 12,
+                            "name": "grape"
+                        },
+                        {
+                            "v": 17,
+                            "name": "grape"
+                        },
+                        {
+                            "v": 19,
+                            "name": "grape"
+                        },
+                        {
+                            "v": 12,
+                            "name": "grape"
+                        }
+                    ]
+                ],
+                smoothLine: [
+                    [
+                        {
+                            "x": -10,
+                            "y": -1000
+                        },
+                        {
+                            "x": -9,
+                            "y": -729
+                        },
+                        {
+                            "x": -8,
+                            "y": -512
+                        },
+                        {
+                            "x": -7,
+                            "y": -343
+                        },
+                        {
+                            "x": -6,
+                            "y": -216
+                        },
+                        {
+                            "x": -5,
+                            "y": -125
+                        },
+                        {
+                            "x": -4,
+                            "y": -64
+                        },
+                        {
+                            "x": -3,
+                            "y": -27
+                        },
+                        {
+                            "x": -2,
+                            "y": -8
+                        },
+                        {
+                            "x": -1,
+                            "y": -1
+                        },
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 8
+                        },
+                        {
+                            "x": 3,
+                            "y": 27
+                        },
+                        {
+                            "x": 4,
+                            "y": 64
+                        },
+                        {
+                            "x": 5,
+                            "y": 125
+                        },
+                        {
+                            "x": 6,
+                            "y": 216
+                        },
+                        {
+                            "x": 7,
+                            "y": 343
+                        },
+                        {
+                            "x": 8,
+                            "y": 512
+                        },
+                        {
+                            "x": 9,
+                            "y": 729
+                        },
+                        {
+                            "x": 10,
+                            "y": 1000
+                        }
+                    ],
+                    [
+                        {
+                            "x": -10,
+                            "y": 100
+                        },
+                        {
+                            "x": -9,
+                            "y": 81
+                        },
+                        {
+                            "x": -8,
+                            "y": 64
+                        },
+                        {
+                            "x": -7,
+                            "y": 49
+                        },
+                        {
+                            "x": -6,
+                            "y": 36
+                        },
+                        {
+                            "x": -5,
+                            "y": 25
+                        },
+                        {
+                            "x": -4,
+                            "y": 16
+                        },
+                        {
+                            "x": -3,
+                            "y": 9
+                        },
+                        {
+                            "x": -2,
+                            "y": 4
+                        },
+                        {
+                            "x": -1,
+                            "y": 1
+                        },
+                        {
+                            "x": 0,
+                            "y": 0
+                        },
+                        {
+                            "x": 1,
+                            "y": 1
+                        },
+                        {
+                            "x": 2,
+                            "y": 4
+                        },
+                        {
+                            "x": 3,
+                            "y": 9
+                        },
+                        {
+                            "x": 4,
+                            "y": 16
+                        },
+                        {
+                            "x": 5,
+                            "y": 25
+                        },
+                        {
+                            "x": 6,
+                            "y": 36
+                        },
+                        {
+                            "x": 7,
+                            "y": 49
+                        },
+                        {
+                            "x": 8,
+                            "y": 64
+                        },
+                        {
+                            "x": 9,
+                            "y": 81
+                        },
+                        {
+                            "x": 10,
+                            "y": 100
+                        }
+                    ]
+                ]
+            },
+            selected: 'Chart.Pie',
+            current: {
+                widget: widget,
+                props: widget.metaData.props
             }
         }
     },
     logChange(value){
-        this.setState({value:value});
+        this.setState({
+                current: {
+                    widget: this.state.current.widget,
+                    props: value
+                }
+            }
+        );
+    },
+    selectChange(e){
+        var widget = widgets[e.target.value];
+        this.setState({
+            selected: e.target.value,
+            current: {
+                widget: widget,
+                props: widget.metaData.props
+            }
+        })
     },
     render() {
-        return (<div>
-            <PropertyEditor value={ this.state.value } settings={chartSettings} onChange={ this.logChange } />
-            <hr/>
-            <pre>{JSON.stringify(this.state.value,null,2)}</pre>
-        </div>)
+        var dataBinder = this.bindToState('data');
+        var widget = this.state.current.widget;
+        var customSettings = widget.metaData !== undefined ? widget.metaData.settings:undefined;
+        return (
+            <div>
+                <div className="row">
+                    <div className="col-md-8">
+                        <select value={this.state.selected} onChange={this.selectChange}>
+                            {
+                                options.map(function (option, i) {
+                                    return (<option key={i} value={option.value}>{option.name}</option>)
+                                })
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-8">
+                        <WidgetRenderer widget={widget} value={this.state.current.props}
+                                        dataBinder={dataBinder}/>
+                    </div>
+                    <div className="col-md-4">
+                        <PropertyEditor value={ this.state.current.props } settings={customSettings}
+                                        onChange={ this.logChange }/>
+                        <hr/>
+                        <pre>{JSON.stringify(this.state.current.props, null, 2)}</pre>
+                    </div>
+                </div>
+            </div>
+        )
     }
 });
 

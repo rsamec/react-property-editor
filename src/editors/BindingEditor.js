@@ -3,7 +3,7 @@ import _ from 'lodash';
 import Json from 'react-json';
 
 var defaultValues = {
-    Path: '',
+    Path:'myData',
     Mode: 'OneWay'
 };
 var settings = {

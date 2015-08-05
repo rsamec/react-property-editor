@@ -1,6 +1,6 @@
 {
   "name": "react-property-editor",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "description": "React property editor.",
   "main": "lib/PropertyEditor.js",
@@ -17,16 +17,17 @@
   "dependencies": {
     "lodash": "^3.10.0",
     "react": "^0.13.3",
+    "react-code-mirror": "^3.0.4",
     "react-color-picker": "^2.1.9",
     "react-json": "0.0.1",
+    "react-tinymce": "^0.2.3",
     "reactify": "^1.1.1"
   },
   "devDependencies": {
-    "codemirror": "^5.5.0",
     "gulp": "^3.8.10",
     "react-binding": "^0.6.4",
-    "react-code-mirror": "^3.0.4",
-    "react-component-gulp-tasks": "^0.7.0"
+    "react-component-gulp-tasks": "^0.7.0",
+    "react-pathjs-chart": "^0.1.2"
   },
   "peerDependencies": {},
   "browserify": {
