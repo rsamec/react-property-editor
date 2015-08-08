@@ -1,10 +1,13 @@
 import React from 'react';
 import TruncateString from '../utils/TruncateString.js';
-import {Modal,Button} from 'react-bootstrap';
-var babel = require('babel-core');
+import {Modal} from 'react-overlays';
+import ModalStyles from '../utils/ModalStyles.js';
+import _ from 'lodash';
 
+var babel = require('babel-core');
 var CodeMirror = require('react-code-mirror');
 var SyntaxHighLight = require('codemirror/mode/javascript/javascript');
+
 
 export default class CodeEditor extends React.Component {
 
@@ -21,8 +24,8 @@ export default class CodeEditor extends React.Component {
         //var code = ReactTools.transform(codeToCompile,{harmony: true});
         //var code = JSXTransformer.transform(codeToCompile,{harmony: true}).code;
 
-        var result =  babel.transform(codeToCompile,{});
-        var newValue = {code:this.state.value,compiled:result.code};
+        var result = babel.transform(codeToCompile, {});
+        var newValue = {code: this.state.value, compiled: result.code};
         this.props.onUpdated(newValue);
         this.setState({showModal: false});
     }
@@ -47,31 +50,15 @@ export default class CodeEditor extends React.Component {
             lineNumbers: true,
             onChange: this.handleChange.bind(this)
         });
+        var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
-            <table>
-                <tr>
-                    <td>
-                        <a onClick={this.open.bind(this)}>[...]</a>
-                        <Modal show={this.state.showModal} onHide={this.close.bind(this)} bsSize='large'
-                               aria-labelledby='contained-modal-title-lg'>
-                            <Modal.Header closeButton>
-                                <Modal.Title id='contained-modal-title-lg'>Javascript editor - (code mirror)</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                {codeMirrorComponent}
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button onClick={this.close.bind(this)}>Close</Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </td>
-                    <td>
-                        <div>
-                             <TruncateString value={this.props.value}/>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <a onClick={this.open.bind(this)}><TruncateString value={this.props.value}/></a>
+                <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
+                       backdropStyle={ModalStyles.backdropStyle}>
+                    <div style={dialogStyle}>{codeMirrorComponent}</div>
+                </Modal>
+            </div>
         );
     }
 }

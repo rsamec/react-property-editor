@@ -51,7 +51,7 @@ var defaultSettings = {
 
 export default class PropertyEditor {
     render(){
-        var settings = _.merge(defaultSettings,this.props.settings);
+        var settings = _.merge(_.cloneDeep(defaultSettings),this.props.settings);
         return (<Json value={this.props.value} settings={settings} onChange={this.props.onChange} /> )
     }
 }

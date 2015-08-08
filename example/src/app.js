@@ -17,7 +17,24 @@ import ChartProps from './ChartProps.js';
 import DesignerWidgets from 'react-designer-widgets';
 var designerWidgets = new DesignerWidgets().getWidgets();
 
+import JSXBox from './JSXBox.js';
+
 var widgetFactory = new WidgetFactory();
+
+widgetFactory.registerWidget('JSXBox', _.extend(JSXBox,{
+    metaData: {
+        props: {
+            content: {
+                code:'return (<div>type your code</div>)',
+                compiled:'(function(){return React.createElement("div",null,"type your code")})();'
+            }
+        },
+        settings:{
+            fields:{content:{type:'codeEditor'}}
+        }
+    }
+}));
+
 
 widgetFactory.registerWidget('Chart.Pie', _.extend(Pie, {metaData: ChartProps['Chart.Pie']}));
 widgetFactory.registerWidget('Chart.SmoothLine', _.extend(SmoothLine, {metaData: ChartProps['Chart.SmoothLine']}));
@@ -53,7 +70,7 @@ widgetFactory.registerWidget('ImagePanel', _.extend(designerWidgets['ImagePanel'
 
 var bootstrapSettings = {
     fields:{
-        content:{type:'string'},
+        //content:{type:'string'},
         bsSize:{type:'select',settings: {
             options: _.map(['large','medium','small','xsmall'], function (key, value) {
                 return {value: key, label: key};
@@ -244,6 +261,7 @@ var chartSettings = {
 };
 
 var options = [
+    {value: 'JSXBox', name: 'JSXBox'},
     {value: 'Chart.Pie', name: 'Pie'},
     {value: 'Chart.SmoothLine', name: 'SmoothLine'},
     {value: 'Chart.Bar', name: 'Bar'},
@@ -263,7 +281,7 @@ var options = [
 var App = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        var widget = widgets['Chart.Pie'];
+        var widget = widgets['react-bootstrap.Well'];
         return {
             data: {
                 pie: [
@@ -519,7 +537,7 @@ var App = React.createClass({
                     ]
                 ]
             },
-            selected: 'Chart.Pie',
+            selected: 'react-bootstrap.Well',
             current: {
                 widget: widget,
                 props: widget.metaData.props

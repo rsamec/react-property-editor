@@ -1,17 +1,18 @@
 import React, {PropTypes} from 'react';
-import {Modal,Button} from 'react-bootstrap';
-import ColorPicker from 'react-color-picker';
+import {Modal} from 'react-overlays';
+import ColorPicker,{Picker} from 'react-colors-picker';
+
+import ModalStyles from '../utils/ModalStyles.js';
 
 export default class CodeEditor extends React.Component {
 
     //static propTypes = {onClose: PropTypes.func}
     constructor(props) {
         super(props);
-        this.state = {show: false, value: this.props.value};
+        this.state = {show: false};
     }
 
     close() {
-        this.props.onUpdated(this.state.value);
         this.setState({showModal: false});
     }
 
@@ -20,37 +21,26 @@ export default class CodeEditor extends React.Component {
     }
 
     handleChange(color) {
-        this.props.onUpdated(color);
-        this.setState({value: color});
+        this.props.onUpdated(color.hex);
     }
 
     render() {
         var color = this.props.value === undefined ? "#000000" : this.props.value;
         return (
-            <table>
-                <tr>
-                    <td>
-                        <a onClick={this.open.bind(this)}>[...]</a>
-                        <Modal show={this.state.showModal} onHide={this.close.bind(this)} bsSize='large'
-                               aria-labelledby='contained-modal-title-lg'>
-                            <Modal.Header closeButton>
-                                <Modal.Title id='contained-modal-title-lg'>Color picker</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <ColorPicker value={this.props.value} onChange={this.handleChange.bind(this)}/>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button onClick={this.close.bind(this)}>Close</Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </td>
-                    <td>
-                        <div style={{background: color, width: 100, height: 20, color: 'white'}}>
-                            {color}
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <a onClick={this.open.bind(this)}>
+                    <div style={{background: color, width: 100, height: 20, color: 'white'}}>
+                        {color}
+                    </div>
+                </a>
+                <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
+                       backdropStyle={ModalStyles.backdropStyle}>
+                    <div style={ModalStyles.dialogStyle}>
+                        <Picker defaultColor={this.props.value} onChange={this.handleChange.bind(this)}/>
+                    </div>
+                </Modal>
+            </div>
+
         );
     }
 }

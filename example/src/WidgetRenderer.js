@@ -17,7 +17,7 @@ export default class WidgetRenderer{
         this.applyBinding(value,this.props.dataBinder);
 
         var widget = this.props.widget;
-        var component = React.createElement(widget,value,value.content !== undefined ? React.DOM.span(null, value.content) : null);
+        var component = React.createElement(widget,value,value.content !== undefined ? React.DOM.div({ dangerouslySetInnerHTML: {__html: value.content } }) : null);
         return (<div>{component}</div>)
     }
 }

@@ -1,15 +1,17 @@
 import React, {PropTypes} from 'react';
 import TinyMce from 'react-tinymce';
 import TruncateString from '../utils/TruncateString.js';
-import {Modal,Button} from 'react-bootstrap';
+import {Modal} from 'react-overlays';
+import _ from 'lodash';
 
-//import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+import ModalStyles from '../utils/ModalStyles.js';
+import TooltipStyles from '../utils/TooltipStyles.js';
 
 export default class HtmlEditor extends React.Component {
     //static propTypes = {onClose: PropTypes.func}
     constructor(props) {
         super(props);
-        this.state = {show: false, value: this.props.value};
+        this.state = {showModal: false, value: this.props.value};
     }
 
     close() {
@@ -25,20 +27,20 @@ export default class HtmlEditor extends React.Component {
         this.setState({value: e.target.getContent()});
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.showModal !== nextState.showModal;
+    }
+
     render() {
+        var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
-            <table>
-                <tr>
-                    <td>
-                        <a onClick={this.open.bind(this)}>[...]</a>
-                        <Modal show={this.state.showModal} onHide={this.close.bind(this)} bsSize='large'
-                               aria-labelledby='contained-modal-title-lg'>
-                            <Modal.Header closeButton>
-                                <Modal.Title id='contained-modal-title-lg'>Html editor - (TinyMCE)</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <TinyMce content={this.props.value}
-                                         config={{
+            <div>
+                <a onClick={this.open.bind(this)}><TruncateString value={this.state.value}/></a>
+                <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
+                       backdropStyle={ModalStyles.backdropStyle} enforceFocus={false}>
+                    <div style={dialogStyle}>
+                        <TinyMce content={this.props.value}
+                                 config={{
                             menubar: false,
                             height:300,
                             plugins: 'autolink link image lists code',
@@ -53,21 +55,11 @@ export default class HtmlEditor extends React.Component {
                                 {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
                             ]
                         }}
-                                         onChange={this.handleChange.bind(this)}
-                                    />
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button onClick={this.close.bind(this)}>Close</Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </td>
-                    <td>
-                        <div>
-                            <TruncateString value={this.props.value}/>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                                 onChange={this.handleChange.bind(this)}
+                            />
+                    </div>
+                </Modal>
+            </div>
         );
     }
 };
