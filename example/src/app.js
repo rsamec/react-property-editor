@@ -27,10 +27,18 @@ widgetFactory.registerWidget('JSXBox', _.extend(JSXBox,{
             content: {
                 code:'return (<div>type your code</div>)',
                 compiled:'(function(){return React.createElement("div",null,"type your code")})();'
-            }
+            },
+            input:{},
+            output:{Mode:'TwoWay'},
+            locales:{}
         },
         settings:{
-            fields:{content:{type:'codeEditor'}}
+            fields:{
+                content:{type:'codeEditor'},
+                input:{type:'bindingEditor',settings:{mode:'TwoWay'}},
+                output:{type:'bindingEditor',settings:{mode:'OneWay'}},
+                locales:{type:'bindingEditor',settings:{mode:'OneWay'}}
+            },
         }
     }
 }));
@@ -281,7 +289,7 @@ var options = [
 var App = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        var widget = widgets['react-bootstrap.Well'];
+        var widget = widgets['JSXBox'];
         return {
             data: {
                 pie: [

@@ -16,6 +16,8 @@ var defaultValues = {
     fontFamily: 'Arial',
     fontSize: 14,
     bold: false,
+    italic:false,
+    underline:false,
     color: '#34495E'
 }
 var settings = {
@@ -42,21 +44,21 @@ export default class FontEditor extends React.Component {
         super(props);
         this.state = {show: false};
     }
-    handleChange(value) {
-        this.props.onUpdated(_.extend(value,
-            {fontWeight: value.bold ? 'bold' : 'normal'}
-        ));
-    }
+    //handleChange(value) {
+    //    this.props.onUpdated(_.extend(value,
+    //        {fontWeight: value.bold ? 'bold' : 'normal'}
+    //    ));
+    //}
     toogle(){
         this.setState({show:!this.state.show});
     }
     render() {
-        var value = _.extend(_.clone(defaultValues),_.omit(this.props.value,'fontWeight'));
-        var text = _.reduce(value,function(result,value,key){ return result+= " " + value},"");
+        var value = _.extend(_.clone(defaultValues),this.props.value);
+        var text = _.reduce(_.omit(value,['bold','italic','underline']),function(result,value,key){ return result+= " " + value},"");
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>
-                {this.state.show?<Json value={value} settings={settings} onChange={this.handleChange.bind(this)} />:null}
+                {this.state.show?<Json value={value} settings={settings} onChange={this.props.onUpdated} />:null}
             </div>
         );
     }
