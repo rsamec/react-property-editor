@@ -3,16 +3,20 @@ import _ from 'lodash';
 import Json from 'react-json';
 
 var defaultValues = {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0
+    width:1,
+    radius: 5,
+    color:'#ffffff',
+    style:'solid'
 };
 var settings = {
     form: true,
     fixedFields: true,
     adder: false,
-    editing: true
+    editing: true,
+    fields:{
+        color:{type:'colorPicker'},
+        style:{type:'select',settings:{options:['solid','dashed']}}
+    }
 };
 
 export default class BorderEditor extends React.Component {

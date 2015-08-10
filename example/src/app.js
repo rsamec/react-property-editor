@@ -14,10 +14,9 @@ import {Pie,Bar, SmoothLine,StockLine,Scatterplot,Tree,Radar} from 'react-pathjs
 import ChartProps from './ChartProps.js';
 
 //react-designer-widgets
-import DesignerWidgets from 'react-designer-widgets';
-var designerWidgets = new DesignerWidgets().getWidgets();
 
 import JSXBox from './JSXBox.js';
+import ImagePanel from './ImagePanel.js'
 
 var widgetFactory = new WidgetFactory();
 
@@ -49,30 +48,72 @@ widgetFactory.registerWidget('Chart.SmoothLine', _.extend(SmoothLine, {metaData:
 widgetFactory.registerWidget('Chart.Bar', _.extend(Bar, {metaData: ChartProps['Chart.Bar']}));
 
 const defaultImageUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
-widgetFactory.registerWidget('ImageBox', _.extend(designerWidgets['ImageBox'], {
+//widgetFactory.registerWidget('ImageBox', _.extend(designerWidgets['ImageBox'], {
+//    metaData: {
+//        props: {
+//            style: {},
+//            url: defaultImageUrl,
+//            radius: 5
+//        }
+//    }
+//}));
+widgetFactory.registerWidget('ImagePanel', _.extend(ImagePanel, {
     metaData: {
         props: {
-            style: {},
-            url: defaultImageUrl,
-            radius: 5
-        }
-    }
-}));
-widgetFactory.registerWidget('ImagePanel', _.extend(designerWidgets['ImagePanel'], {
-    metaData: {
-        props: {
-            style: {},
-            imageUrl: defaultImageUrl,
-            imageWidth: 100,
-            imageHeight: 100,
-            imageAlign: 'topRight',
+            width: 700,
+            height: 400,
             content: 'type your content',
-            imageRadius: 5,
-            bgColor: '',
-            color: '',
-            imageMargin: 5,
-            padding: 5
+            bgColor: '#f7c10c',
+            margin:{},
+            padding:{
+                top:10,
+                right:10,
+                bottom:10,
+                left:10
+            },
+            border:{
+                width: 3,
+                radius: 10,
+                color:'#000000',
+                style:'solid'
+            },
+            imageAlign: 'topLeft',
+            image: {
+                url: defaultImageUrl,
+                width: 100,
+                height: 100,
+                border:{
+                    width: 2,
+                    radius: 20,
+                    color:'#000000',
+                    style:'solid'
+                },
+                margin: {
+                    top:5,
+                    left:5,
+                    bottom:5,
+                    right:5
+                },
+
+            }
+        },
+        settings: {
+            fields: {
+                imageAlign: {
+                    type: 'select',
+                    settings: {options: ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']}
+                },
+                image: {
+                    fields: {
+                        padding:{type:'boxSizeEditor'},
+                        margin:{type:'boxSizeEditor'},
+                        border:{type:'borderEditor'}
+                    }
+                },
+                bgColor: {type: 'colorPicker'}
+            }
         }
+
     }
 }));
 
@@ -289,7 +330,7 @@ var options = [
 var App = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        var widget = widgets['JSXBox'];
+        var widget = widgets['ImagePanel'];
         return {
             data: {
                 pie: [
@@ -545,7 +586,7 @@ var App = React.createClass({
                     ]
                 ]
             },
-            selected: 'react-bootstrap.Well',
+            selected: 'ImagePanel',
             current: {
                 widget: widget,
                 props: widget.metaData.props

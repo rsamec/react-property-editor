@@ -3,25 +3,19 @@ import _ from 'lodash';
 import Json from 'react-json';
 
 var defaultValues = {
-    margin:{},
-    padding:{},
-    border:{},
-    content:{}
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
 };
 var settings = {
     form: true,
     fixedFields: true,
     adder: false,
-    editing: true,
-    fields:{
-        margin:{type:'boxSizeEditor'},
-        padding:{type:'boxSizeEditor'},
-        border:{type:'borderEditor'},
-        content:{type:'htmlEditor'}
-    }
+    editing: true
 };
 
-export default class BoxEditor extends React.Component {
+export default class BoxSizeEditor extends React.Component {
 
     constructor(props) {
         super(props);

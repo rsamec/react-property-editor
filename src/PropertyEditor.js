@@ -10,6 +10,7 @@ import PlainJsonEditor from './editors/PlainJsonEditor.js';
 import JsonEditor from './editors/JsonEditor.js';
 import FontEditor from './editors/FontEditor.js';
 import BoxEditor from './editors/BoxEditor.js';
+import BoxSizeEditor from './editors/BoxSizeEditor.js';
 import BorderEditor from './editors/BorderEditor.js';
 import PositionEditor from './editors/PositionEditor.js';
 import BindingEditor from './editors/BindingEditor.js';
@@ -22,6 +23,7 @@ Json.registerType('textEditor',PlainTextEditor);
 Json.registerType('jsonEditor',JsonEditor);
 Json.registerType('fontEditor',FontEditor);
 Json.registerType('boxEditor',BoxEditor);
+Json.registerType('boxSizeEditor',BoxSizeEditor);
 Json.registerType('positionEditor',PositionEditor);
 Json.registerType('borderEditor',BorderEditor);
 Json.registerType('bindingEditor',BindingEditor);
@@ -42,8 +44,9 @@ var defaultSettings = {
         font:{type:'fontEditor'},
         border:{type:'borderEditor'},
         style:{type:'positionEditor'},
-        margin:{type:'boxEditor'},
-        padding:{type:'boxEditor'},
+        margin:{type:'boxSizeEditor'},
+        padding:{type:'boxSizeEditor'},
+        box:{type:'boxEditor'},
         binding:{type:'bindingEditor'},
         value:{type:'bindingEditor'}
     }
