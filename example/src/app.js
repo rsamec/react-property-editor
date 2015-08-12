@@ -265,8 +265,26 @@ var TickValuesWrapper = React.createClass({
     }
 });
 
+
 Json.registerType('tickValues', TickValuesWrapper);
 
+// Create the custom field type component
+var DataComponent = React.createClass({
+    render: function () {
+        return (<div>{JSON.stringify(this.props.data,null,2)}</div>)
+    },
+});
+
+widgetFactory.registerWidget('Data', _.extend(DataComponent, {
+    metaData: {
+        props: {
+            data: {}
+        },
+        settings:{
+            fields:{data:{type:'dataTemplateEditor'}}
+        }
+    }
+}));
 
 // form: true
 // make objects not extensible,
@@ -310,6 +328,7 @@ var chartSettings = {
 };
 
 var options = [
+    {value: 'Data', name: 'Data'},
     {value: 'JSXBox', name: 'JSXBox'},
     {value: 'Chart.Pie', name: 'Pie'},
     {value: 'Chart.SmoothLine', name: 'SmoothLine'},
@@ -330,7 +349,7 @@ var options = [
 var App = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        var widget = widgets['ImagePanel'];
+        var widget = widgets['Data'];
         return {
             data: {
                 pie: [
@@ -586,7 +605,7 @@ var App = React.createClass({
                     ]
                 ]
             },
-            selected: 'ImagePanel',
+            selected: 'Data',
             current: {
                 widget: widget,
                 props: widget.metaData.props

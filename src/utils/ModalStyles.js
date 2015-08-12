@@ -22,7 +22,9 @@ const dialogStyle =
     border: '1px solid #e5e5e5',
     backgroundColor: 'white',
     boxShadow: '0 5px 15px rgba(0,0,0,.5)',
-    padding: 20
+    padding: 20,
+    maxHeight:'100%',
+    overflowY:'scroll'
 };
 
 export default {
