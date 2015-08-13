@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 import PropertyEditor from 'react-property-editor';
 import BindToMixin from 'react-binding';
 import Json from 'react-json';

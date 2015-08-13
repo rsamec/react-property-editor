@@ -21,6 +21,7 @@ Json.registerType('colorPicker', ColorPickerEditor);
 Json.registerType('htmlEditor', HtmlEditor);
 Json.registerType('codeEditor',CodeEditor);
 Json.registerType('textEditor',PlainTextEditor);
+Json.registerType('plainJsonEditor',PlainJsonEditor);
 Json.registerType('jsonEditor',JsonEditor);
 Json.registerType('fontEditor',FontEditor);
 Json.registerType('boxEditor',BoxEditor);
