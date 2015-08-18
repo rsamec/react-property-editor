@@ -1,7 +1,7 @@
 {
   "name": "react-property-editort",
   "main": "dist/react-property-editor.min.js",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "homepage": "https://github.com/rsamec/react-property-editor",
   "authors": [
     "Roman Samec"

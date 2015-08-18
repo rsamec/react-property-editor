@@ -26,8 +26,8 @@ export default class PositionEditor extends React.Component {
         this.setState({show:!this.state.show});
     }
     render() {
-        var value = this.props.value;
-        var text = _.reduce(value,function(result,value,key){ return result+= " " + !!value?value:'-'},"");
+        var value = _.clone(this.props.value);
+        var text = _.reduce(value,function(result,item,key){ return result+= " " + !!item?item:'-'},"");
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>
