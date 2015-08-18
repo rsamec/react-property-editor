@@ -30,7 +30,14 @@ widgetFactory.registerWidget('JSXBox', _.extend(JSXBox,{
             },
             input:{},
             output:{Mode:'TwoWay'},
-            locales:{}
+            locales:{},
+            style:{
+                top:0,
+                left:0,
+                width:100,
+                height:100,
+                position:'relative'
+            }
         },
         settings:{
             fields:{
@@ -279,7 +286,11 @@ var DataComponent = React.createClass({
 widgetFactory.registerWidget('Data', _.extend(DataComponent, {
     metaData: {
         props: {
-            data: {}
+            data: {},
+            style:{
+                top:0,
+                left:0
+            }
         },
         settings:{
             fields:{data:{type:'dataTemplateEditor', settings:{templates:DataTemplates}}}
