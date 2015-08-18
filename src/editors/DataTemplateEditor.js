@@ -5,7 +5,6 @@ import Json from 'react-json';
 import _ from 'lodash'
 import genie from 'genie';
 
-import DataTemplates from '../utils/DataTemplates.js';
 import ModalStyles from '../utils/ModalStyles.js';
 
 export default class DataTemplateEditor extends React.Component {
@@ -14,8 +13,7 @@ export default class DataTemplateEditor extends React.Component {
         super(props);
         this.state = {
             show: false,
-            value: this.props.value.toJS(),
-            selectedTemplate:{name:'bar',content:DataTemplates['bar']}
+            value: this.props.value.toJS()
         };
     }
 
@@ -35,7 +33,7 @@ export default class DataTemplateEditor extends React.Component {
         this.setState({result:genie(this.state.value)})
     }
     templateChanged(e){
-        var newDataTemplate =  DataTemplates[e.target.value];
+        var newDataTemplate = this.props.settings.templates[e.target.value];
         if (newDataTemplate !== undefined)
             this.setState({selectedTemplate:{name:e.target.value,content:newDataTemplate}});
     }
@@ -51,15 +49,20 @@ export default class DataTemplateEditor extends React.Component {
 
     render() {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
-        var options = _.map(_.keys(DataTemplates),function(option,i){return <option key={i} value={option}>{option}</option>});
+        var options = _.map(_.keys(this.props.settings.templates),function(option,i){return <option key={i} value={option} selected={false} >{option}</option>});
         return (
             <div>
                 <a onClick={this.open.bind(this)}><TruncateString value={this.props.value}/></a>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={dialogStyle}>
-                        <select onChange={this.templateChanged.bind(this)}>{options}</select>
-                        <div>{JSON.stringify(this.state.selectedTemplate.content,null,2)}</div>
+                        <select onChange={this.templateChanged.bind(this)}>
+                            <option disabled hidden selected />
+                            {options}
+                        </select>
+                        {!!this.state.selectedTemplate ?
+                            <div>{JSON.stringify(this.state.selectedTemplate.content, null, 2)}</div> : null
+                        }
                         <button onClick={this.addTemplate.bind(this)}>Add</button>
                         <hr />
                         <Json value={this.state.value} onChange={this.handleChange.bind(this)}/>

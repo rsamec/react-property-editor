@@ -5,6 +5,7 @@ import BindToMixin from 'react-binding';
 import Json from 'react-json';
 import WidgetFactory from './WidgetFactory.js';
 import WidgetRenderer from './WidgetRenderer.js';
+import DataTemplates from './DataTemplates.js';
 
 //react bootstrap
 import {Button,Input,Panel,Glyphicon,Label,Alert,Well} from 'react-bootstrap';
@@ -281,7 +282,7 @@ widgetFactory.registerWidget('Data', _.extend(DataComponent, {
             data: {}
         },
         settings:{
-            fields:{data:{type:'dataTemplateEditor'}}
+            fields:{data:{type:'dataTemplateEditor', settings:{templates:DataTemplates}}}
         }
     }
 }));
