@@ -3,9 +3,9 @@ import _ from 'lodash';
 import Json from 'react-json';
 
 var defaultValues = {
-    Path: '',
-    Mode: 'OneWay',
-    Converter: undefined
+    path: undefined,
+    converter: undefined,
+    mode: 'OneWay'
 };
 var settings = {
     form: true,
@@ -13,7 +13,7 @@ var settings = {
     adder: false,
     editing: true,
     fields: {
-        Mode: {
+        mode: {
             type: 'select', settings: {
                 editing:false,
                 options: _.map(['OneWay', 'TwoWay'], function (key, value) {
@@ -21,7 +21,7 @@ var settings = {
                 })
             }
         },
-        Converter: {
+        converter: {
             type: 'codeEditor'
         },
     }
@@ -33,19 +33,13 @@ export default class BindingEditor extends React.Component {
         super(props);
         this.state = {show: false};
     }
-
     toogle() {
         this.setState({show: !this.state.show});
     }
-    valueChanged(e){
-        var value = _.cloneDeep(this.props.value);
-        value.Path = e.target.value;
-        this.props.onUpdated(value);
-    }
     render() {
         var value = _.extend(_.clone(defaultValues), this.props.value);
-        var textClass = !!value.Path?"":"jsonNovalue";
-        var text = !!value.Path?value.Path:"No value";
+        var textClass = !!value.path?"":"jsonNovalue";
+        var text = !!value.path?'= ' + value.path:"No value";
         return (
                 <div className={this.state.show?'open':''}>
                     <span className="compoundToggle" onClick={this.toogle.bind(this)}><span className={textClass}>{text}</span></span>

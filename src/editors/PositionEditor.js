@@ -15,6 +15,10 @@ var settings = {
     adder: false,
     editing: true,
     fields:{
+        top:{type:'number'},
+        left:{type:'number'},
+        height:{type:'number'},
+        width:{type:'number'},
         position: {
             type: 'select', settings: {options:['static','relative','absolute','fixed','initial','inherit']}
         }
@@ -32,9 +36,7 @@ export default class PositionEditor extends React.Component {
     }
     render() {
         var value = _.clone(this.props.value);
-        var text = _.reduce(value,function(result,item){
-            var s =  isNaN(item)?'-':item;
-            return result+=(" " + s)},"");
+        var text = _.reduce(value,function(result,value,key){ return result+= " " + (value!==undefined?value:'--')},"");
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>

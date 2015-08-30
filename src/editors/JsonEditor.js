@@ -4,6 +4,7 @@ import {Modal} from 'react-overlays';
 import Json from 'react-json';
 import _ from 'lodash'
 
+import EmptyValue from '../utils/EmptyValue.js';
 import ModalStyles from '../utils/ModalStyles.js';
 
 export default class JsonEditor extends React.Component {
@@ -21,7 +22,9 @@ export default class JsonEditor extends React.Component {
     open() {
         this.setState({showModal: true});
     }
-
+    unset(){
+        this.props.onUpdated(undefined);
+    }
     handleChange(value) {
         this.setState({value: value});
     }
@@ -30,7 +33,7 @@ export default class JsonEditor extends React.Component {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
             <div>
-                <a onClick={this.open.bind(this)}><TruncateString value={this.props.value}/></a>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}><TruncateString value={this.props.value}/></EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={dialogStyle}>

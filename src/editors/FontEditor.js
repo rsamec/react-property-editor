@@ -19,7 +19,16 @@ var defaultValues = {
     italic:false,
     underline:false,
     color: '#34495E'
+};
+var emptyValues = {
+    fontFamily: undefined,
+    fontSize: undefined,
+    bold: undefined,
+    italic:undefined,
+    underline:undefined,
+    color: undefined
 }
+
 var settings = {
     form: true,
     fixedFields: true,
@@ -34,6 +43,10 @@ var settings = {
                 })
             }
         },
+        fontSize:{type:'number'},
+        bold:{type:'boolean'},
+        italic:{type:'boolean'},
+        underline:{type:'boolean'}
     }
 }
 
@@ -52,12 +65,17 @@ export default class FontEditor extends React.Component {
     toogle(){
         this.setState({show:!this.state.show});
     }
+    reset(){
+        this.props.onUpdated(emptyValues);
+    }
     render() {
-        var value = _.extend(_.clone(defaultValues),this.props.value);
-        var text = _.reduce(_.omit(value,['bold','italic','underline']),function(result,value,key){ return result+= " " + value},"");
+        var value = _.extend(_.clone(emptyValues),this.props.value);
+        var text = _.reduce(_.omit(value,['bold','italic','underline']),function(result,value,key){ return result+= " " + (value!==undefined?value:'--')},"");
+        var reset = <a className='jsonReset' onClick={this.reset.bind(this)}>x</a>
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>
+                {this.props.value !== undefined  ? {reset}:null}
                 {this.state.show?<Json value={value} settings={settings} onChange={this.props.onUpdated} />:null}
             </div>
         );

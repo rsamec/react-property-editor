@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Modal} from 'react-overlays';
 import ColorPicker,{Picker} from 'react-colors-picker';
 
+import EmptyValue from '../utils/EmptyValue.js';
 import ModalStyles from '../utils/ModalStyles.js';
 
 export default class CodeEditor extends React.Component {
@@ -19,20 +20,21 @@ export default class CodeEditor extends React.Component {
     open() {
         this.setState({showModal: true});
     }
-
+    unset(){
+        this.props.onUpdated(undefined);
+    }
     handleChange(color) {
         this.props.onUpdated(color.hex);
     }
-
     render() {
-        var color = this.props.value === undefined ? "#000000" : this.props.value;
+        var color = this.props.value;
         return (
             <div>
-                <a onClick={this.open.bind(this)}>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}>
                     <div style={{background: color, width: 100, height: 20, color: 'white'}}>
                         {color}
                     </div>
-                </a>
+                </EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={ModalStyles.dialogStyle}>

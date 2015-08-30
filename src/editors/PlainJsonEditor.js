@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import {Modal} from 'react-overlays';
 
+import EmptyValue from '../utils/EmptyValue.js';
 import ModalStyles from '../utils/ModalStyles.js';
 
 export default class PlainJsonEditor extends React.Component {
@@ -19,7 +20,9 @@ export default class PlainJsonEditor extends React.Component {
     open() {
         this.setState({showModal: true});
     }
-
+    unset(){
+        this.props.onUpdated(undefined);
+    }
     handleChange(e) {
         this.setState({value: e.target.value});
     }
@@ -27,7 +30,7 @@ export default class PlainJsonEditor extends React.Component {
     render() {
         return (
             <div>
-                <a onClick={this.open.bind(this)}><TruncateString value={this.props.value}/></a>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}><TruncateString value={this.props.value}/></EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={ModalStyles.dialogStyle}>

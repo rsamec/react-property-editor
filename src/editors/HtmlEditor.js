@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import ModalStyles from '../utils/ModalStyles.js';
 import TooltipStyles from '../utils/TooltipStyles.js';
+import EmptyValue from '../utils/EmptyValue.js';
 
 export default class HtmlEditor extends React.Component {
     //static propTypes = {onClose: PropTypes.func}
@@ -28,14 +29,18 @@ export default class HtmlEditor extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.state.showModal !== nextState.showModal;
+        return this.state.showModal !== nextState.showModal || nextState.value === undefined;
+    }
+    unset(){
+        this.setState({value: undefined});
+        this.props.onUpdated(undefined);
     }
 
     render() {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
             <div>
-                <a onClick={this.open.bind(this)}><TruncateString value={this.state.value}/></a>
+                <EmptyValue value={this.state.value} open={this.open.bind(this)} unset={this.unset.bind(this)}><TruncateString value={this.state.value}/></EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle} enforceFocus={false}>
                     <div style={dialogStyle}>

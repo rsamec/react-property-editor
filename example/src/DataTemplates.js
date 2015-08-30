@@ -96,28 +96,26 @@ export default {
         }
     },
     stockLine: {
-        data: {
-            min: 80,
-            max: 80,
-            template: {
-                title: {
-                    pattern: 'brState'
-                },
-                a: {
-                    min: 10000,
-                    max: 100000,
-                    places: 0
-                },
-                b: {
-                    min: 50000,
-                    max: 200000,
-                    places: 0
-                },
-                c: {
-                    min: 100000,
-                    max: 300000,
-                    places: 0
-                }
+        min: 80,
+        max: 80,
+        template: {
+            title: {
+                pattern: 'brState'
+            },
+            a: {
+                min: 10000,
+                max: 100000,
+                places: 0
+            },
+            b: {
+                min: 50000,
+                max: 200000,
+                places: 0
+            },
+            c: {
+                min: 100000,
+                max: 300000,
+                places: 0
             }
         }
     },

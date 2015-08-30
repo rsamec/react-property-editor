@@ -2,8 +2,9 @@ import React from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import {Modal} from 'react-overlays';
 import ModalStyles from '../utils/ModalStyles.js';
-import _ from 'lodash';
+import EmptyValue from '../utils/EmptyValue.js';
 
+var _ = require('lodash');
 var babel = require('babel-core');
 var CodeMirror = require('react-code-mirror');
 var SyntaxHighLight = require('codemirror/mode/javascript/javascript');
@@ -29,6 +30,9 @@ export default class CodeEditor extends React.Component {
         this.props.onUpdated(newValue);
         this.setState({showModal: false});
     }
+    unset(){
+        this.props.onUpdated(undefined);
+    }
 
     open() {
         this.setState({showModal: true});
@@ -37,14 +41,16 @@ export default class CodeEditor extends React.Component {
     handleChange(e) {
         this.setState({value: e.target.value});
     }
-
+    componentWillReceiveProps(nextProps) {
+        this.setState({value:  nextProps.value && nextProps.value.code || '' });
+    }
     render() {
 
         var codeMirrorComponent = React.createElement(CodeMirror, {
             style: {border: '1px solid black'},
             textAreaClassName: ['form-control'],
             textAreaStyle: {minHeight: '10em'},
-            value: this.state.value,
+            value:this.state.value,
             mode: 'javascript',
             theme: 'solarized',
             lineNumbers: true,
@@ -53,7 +59,7 @@ export default class CodeEditor extends React.Component {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
             <div>
-                <a onClick={this.open.bind(this)}><TruncateString value={this.props.value}/></a>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}>Show code</EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={dialogStyle}>{codeMirrorComponent}</div>

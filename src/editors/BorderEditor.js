@@ -8,12 +8,20 @@ var defaultValues = {
     color:'#ffffff',
     style:'solid'
 };
+var emptyValues = {
+    width:undefined,
+    radius: undefined,
+    color:undefined,
+    style:undefined
+}
 var settings = {
     form: true,
     fixedFields: true,
     adder: false,
     editing: true,
     fields:{
+        width:{type:'number'},
+        radius:{type:'number'},
         color:{type:'colorPicker'},
         style:{type:'select',settings:{options:['solid','dashed']}}
     }
@@ -28,12 +36,17 @@ export default class BorderEditor extends React.Component {
     toogle(){
         this.setState({show:!this.state.show});
     }
+    reset(){
+        this.props.onUpdated(emptyValues);
+    }
     render() {
-        var value = _.extend(_.clone(defaultValues),this.props.value);
-        var text = _.reduce(value,function(result,value,key){ return result+= " " + value},"");
+        var value = _.extend(_.clone(emptyValues),this.props.value);
+        var text = _.reduce(value,function(result,value,key){ return result+= " " + (value!==undefined?value:'--')},"");
+        var reset = <a className='jsonReset' onClick={this.reset.bind(this)}>x</a>
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>
+                {this.props.value !== undefined  ? {reset}:null}
                 {this.state.show?<Json value={value} settings={settings} onChange={ this.props.onUpdated} />:null}
             </div>
         );

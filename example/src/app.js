@@ -72,7 +72,8 @@ widgetFactory.registerWidget('ImagePanel', _.extend(ImagePanel, {
             height: 400,
             content: 'type your content',
             bgColor: '#f7c10c',
-            margin:{},
+            roundCorner:false,
+            margin:undefined,
             padding:{
                 top:10,
                 right:10,
@@ -101,12 +102,16 @@ widgetFactory.registerWidget('ImagePanel', _.extend(ImagePanel, {
                     left:5,
                     bottom:5,
                     right:5
-                },
-
+                }
             }
         },
         settings: {
             fields: {
+                //content:{type:'bindingEditor',settings:{fields:{type:'htmlEditor'}}},
+                roundCorner:{type:'boolean'},
+                width:{type:'number'},
+                height:{type:'number'},
+                content:{type:'htmlEditor'},
                 imageAlign: {
                     type: 'select',
                     settings: {options: ['topLeft', 'topRight', 'bottomLeft', 'bottomRight']}
@@ -137,7 +142,8 @@ var bootstrapSettings = {
             options: _.map(['default','primary','success','info','warning','danger','link'], function (key, value) {
                 return {value: key, label: key};
             })
-        }}
+        }},
+        value:{type:'bindingEditor',settings:{type:'plainJsonEditor'}}
     }
 };
 
@@ -197,7 +203,7 @@ widgetFactory.registerWidget('react-bootstrap.Well', _.extend(Well, {
 widgetFactory.registerWidget('react-bootstrap.Input', _.extend(Input, {
     metaData: {
         props: {
-            type: 'text',placeholder:'type your text', label:'label', help:'',value:''
+            type: 'text',placeholder:'type your text', label:'label', help:'',value:'value'
         },
         settings:bootstrapSettings
     }
@@ -338,7 +344,34 @@ var chartSettings = {
         }
     }
 };
+var cleanObjProps = function(obj){
+    return cleanObjPropsEx(_.cloneDeep(obj));
+}
+var cleanObjPropsEx = function (obj) {
+    for(var k in obj) {
+        if(typeof obj[k] == "object"
+            && obj[k] !== null
+            && !(obj[k] instanceof Array)
+            && !(obj[k] instanceof String)
+            && !(obj[k] instanceof Number)) {
 
+            cleanObjPropsEx(obj[k]);
+            continue;
+        }
+
+        switch(typeof obj[k]) {
+            case 'undefined':
+            case 'boolean':
+            case 'string':
+            case 'number':
+                obj[k] = undefined;
+                break;
+            default:
+                obj[k] = [];
+        }
+    }
+    return  obj;
+};
 var options = [
     {value: 'Data', name: 'Data'},
     {value: 'JSXBox', name: 'JSXBox'},
@@ -357,13 +390,19 @@ var options = [
 
 ];
 
+var defaultTheme = {
+    ImagePanel:{
+        bgColor:'#ffc1ff'
+    }
+}
 
 var App = React.createClass({
     mixins: [BindToMixin],
     getInitialState(){
-        var widget = widgets['Data'];
+        var widget = widgets['ImagePanel'];
         return {
             data: {
+                text:'hello world',
                 pie: [
                     {
                         "name": "Goiás",
@@ -617,10 +656,10 @@ var App = React.createClass({
                     ]
                 ]
             },
-            selected: 'Data',
+            selected: 'ImagePanel',
             current: {
                 widget: widget,
-                props: widget.metaData.props
+                props: cleanObjProps(widget.metaData.props)
             }
         }
     },
@@ -639,7 +678,7 @@ var App = React.createClass({
             selected: e.target.value,
             current: {
                 widget: widget,
-                props: widget.metaData.props
+                props: cleanObjProps(widget.metaData.props)
             }
         })
     },
@@ -662,12 +701,12 @@ var App = React.createClass({
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <WidgetRenderer widget={widget} value={this.state.current.props}
+                        <WidgetRenderer widget={widget} node={this.state.current.props}
                                         dataBinder={dataBinder}/>
                     </div>
                     <div className="col-md-4">
                         <PropertyEditor value={ this.state.current.props } settings={customSettings}
-                                        onChange={ this.logChange }/>
+                                        onChange={ this.logChange }  />
                         <hr/>
                         <pre>{JSON.stringify(this.state.current.props, null, 2)}</pre>
                     </div>

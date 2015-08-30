@@ -13,7 +13,8 @@ import BoxEditor from './editors/BoxEditor.js';
 import BoxSizeEditor from './editors/BoxSizeEditor.js';
 import BorderEditor from './editors/BorderEditor.js';
 import PositionEditor from './editors/PositionEditor.js';
-import BindingEditor from './editors/BindingEditor.js';
+import BindingEditor from './editors/BindingValueEditor.js';
+import BindingExpression from './editors/BindingEditor.js';
 import DataTemplateEditor from './editors/DataTemplateEditor.js';
 
 // Register the type in react-json
@@ -29,6 +30,7 @@ Json.registerType('boxSizeEditor',BoxSizeEditor);
 Json.registerType('positionEditor',PositionEditor);
 Json.registerType('borderEditor',BorderEditor);
 Json.registerType('bindingEditor',BindingEditor);
+Json.registerType('bindingExpression',BindingExpression);
 Json.registerType('dataEditor',JsonEditor);
 Json.registerType('dataTemplateEditor',DataTemplateEditor);
 

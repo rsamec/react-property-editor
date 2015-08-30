@@ -89,6 +89,21 @@
 .jsonName:hover > .jsonRemove {
   visibility: visible;
 }
+.jsonReset {
+  visibility: hidden;
+  padding-left: 0px;
+  text-decoration: none;
+  width: .6em;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+.jsonValue:hover > div > .jsonReset {
+  visibility: visible;
+}
+.jsonValue:hover > div > div > .jsonReset {
+  visibility: visible;
+}
 .compoundToggle,
 .jsonString {
   cursor: pointer;
