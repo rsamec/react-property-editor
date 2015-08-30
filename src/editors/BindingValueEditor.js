@@ -16,7 +16,7 @@ var settings = {
     adder: false,
     editing: true,
     fields: {
-        binding: { type:'bindingExpression'}
+        binding: { type:'bindingEditor'}
     }
 };
 
