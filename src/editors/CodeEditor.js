@@ -30,10 +30,6 @@ export default class CodeEditor extends React.Component {
         this.props.onUpdated(newValue);
         this.setState({showModal: false});
     }
-    unset(){
-        this.props.onUpdated(undefined);
-    }
-
     open() {
         this.setState({showModal: true});
     }
@@ -59,7 +55,7 @@ export default class CodeEditor extends React.Component {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
             <div>
-                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}>Show code</EmptyValue>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)}>Show code</EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={dialogStyle}>{codeMirrorComponent}</div>

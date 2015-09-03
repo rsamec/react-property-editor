@@ -1,6 +1,6 @@
 {
   "name": "react-property-editor",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "description": "React property editor.",
   "main": "lib/PropertyEditor.js",

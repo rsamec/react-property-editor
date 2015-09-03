@@ -21,7 +21,7 @@ export default class HtmlEditor extends React.Component {
     }
 
     open() {
-        this.setState({showModal: true});
+        this.setState({showModal: true,value:this.props.value});
     }
 
     handleChange(e) {
@@ -29,18 +29,13 @@ export default class HtmlEditor extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.state.showModal !== nextState.showModal || nextState.value === undefined;
+        return this.state.showModal !== nextState.showModal || this.props.value !== nextProps.value;
     }
-    unset(){
-        this.setState({value: undefined});
-        this.props.onUpdated(undefined);
-    }
-
     render() {
         var dialogStyle = _.extend(ModalStyles.dialogStyle,{minWidth:800});
         return (
             <div>
-                <EmptyValue value={this.state.value} open={this.open.bind(this)} unset={this.unset.bind(this)}><TruncateString value={this.state.value}/></EmptyValue>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)}><TruncateString value={this.props.value}/></EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle} enforceFocus={false}>
                     <div style={dialogStyle}>

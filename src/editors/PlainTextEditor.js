@@ -18,10 +18,7 @@ export default class PlainTextEditor extends React.Component {
     }
 
     open() {
-        this.setState({showModal: true});
-    }
-    unset(){
-        this.props.onUpdated(undefined);
+        this.setState({showModal: true, value:this.props.value});
     }
     handleChange(e) {
         this.setState({value: e.target.value});
@@ -30,7 +27,7 @@ export default class PlainTextEditor extends React.Component {
     render() {
         return (
             <div>
-                <EmptyValue value={this.props.value} open={this.open.bind(this)} unset={this.unset.bind(this)}><TruncateString value={this.props.value}/></EmptyValue>
+                <EmptyValue value={this.props.value} open={this.open.bind(this)}><TruncateString value={this.props.value}/></EmptyValue>
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={ModalStyles.dialogStyle}>
