@@ -6,47 +6,49 @@ var WidgetRenderer = React.createClass({
     mixins:[BindToMixin],
     applyBinding(widget,box,dataBinder){
         //go through all properties
-        for (var propName in box){
+        for (var propName in box) {
             var prop = box[propName];
 
 
             //TODO: find better way how to detect binding
-            var field = widget.metaData && widget.metaData.settings && widget.metaData.settings.fields[propName];
-            var isBinding = field!== undefined && field.type === 'bindingEditor';
+            var field = widget.metaData && widget.metaData.settings && widget.metaData.settings.fields && widget.metaData.settings.fields[propName];
+            var isBinding = field !== undefined && (field.type === 'bindingEditor' || field.type === 'bindingValueEditor');
 
             //if binding -> replace binding props
-            if (isBinding){
-                if (prop.checked) {
-                    var bindingProp = prop;
+            if (isBinding) {
 
-                    //one-way binding
+                //bind to const value
+                if (prop.value !== undefined) {
+                    box[propName] = prop.value;
+                    continue;
+                }
+
+
+                var bindingProps = prop; //field.type === 'bindingEditor'?prop:prop.binding;
+                if (_.isObject(bindingProps) && !!bindingProps.path) {
+                    //apply binding
                     var converter;
-                    if (!!bindingProp.Converter && !!bindingProp.Converter.compiled) {
-                        converter = eval(bindingProp.Converter.compiled);
-                    };
+                    if (!!prop.Converter && !!bindingProps.converter.compiled) {
+                        converter = eval(bindingProps.converter.compiled);
+                    }
+                    var binding = this.bindTo(dataBinder, bindingProps.path, converter);
 
-                    var binding = this.bindTo(dataBinder, bindingProp.Path, converter);
-
-                    if (!!!bindingProp.Path)
-                    {
+                    if (prop.Mode === 'TwoWay') {
+                        //two-way binding
+                        //box.valueLink = this.bindTo(dataBinder, bindingProps.path, converter);
                         box[propName] = undefined;
                     }
                     else {
-                        if (bindingProp.Mode === 'TwoWay') {
-                            //box.valueLink = this.bindTo(dataBinder, prop.Path,converter);
-                            box[propName] = undefined;
-                        }
-                        else {
-                            //box[propName] = dataBinder.value[prop.Path];
-                            box[propName] = binding.value;
-                        }
+                        //one-way binding
+                        //box[propName] = dataBinder.value[prop.Path];
+                        box[propName] = binding.value;
                     }
                 }
-                else{
-                    box[propName] = prop.value;
+                else {
+                    //binding is not correctly set - do not apply binding
+                    box[propName] = undefined;
                 }
             }
-
         }
     },
     render(){
@@ -56,7 +58,12 @@ var WidgetRenderer = React.createClass({
             return React.DOM.span(null, 'Component ' + box.elementName + ' is not register among widgets.');
         }
 
-        var props = _.merge(_.cloneDeep(widget.metaData.props),box);
+        var customStyle= this.props.customStyle;
+
+        //apply property resolution strategy -> default style -> custom style -> local style
+        var widgetStyle = _.cloneDeep(widget.metaData.props || {});
+        if (customStyle !== undefined) widgetStyle = _.merge(widgetStyle,customStyle);
+        var props = _.merge(widgetStyle,box.props);
         if (this.props.dataBinder !== undefined)  this.applyBinding(widget,props,this.props.dataBinder);
 
         return  React.createElement(widget,props,props.content !== undefined ? React.DOM.div({ dangerouslySetInnerHTML: {__html: props.content } }) : null);

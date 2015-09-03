@@ -30,18 +30,12 @@ export default class BoxSizeEditor extends React.Component {
     toogle(){
         this.setState({show:!this.state.show});
     }
-    reset(){
-        this.props.onUpdated(undefined);
-    }
     render() {
         var value = _.extend(_.clone(defaultValues),this.props.value);
         var text = _.reduce(value,function(result,value,key){ return result+= " " + (value!==undefined?value:'--')},"");
-        var reset = <a className='jsonReset' onClick={this.reset.bind(this)}>x</a>
-
         return (
             <div className={this.state.show?'open':''}>
                 <span className="compoundToggle" onClick={this.toogle.bind(this)}>{text}</span>
-                {this.props.value !== undefined  ? {reset}:null}
                 {this.state.show?<Json value={value} settings={settings} onChange={ this.props.onUpdated} />:null}
             </div>
         );

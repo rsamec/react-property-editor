@@ -17,6 +17,8 @@ import BindingEditor from './editors/BindingEditor.js';
 import BindingValueEditor from './editors/BindingValueEditor.js';
 import DataTemplateEditor from './editors/DataTemplateEditor.js';
 
+import ModalStyles from './utils/ModalStyles.js';
+
 // Register the type in react-json
 Json.registerType('colorPicker', ColorPickerEditor);
 Json.registerType('htmlEditor', HtmlEditor);
@@ -61,7 +63,10 @@ var defaultSettings = {
     }
 };
 
+
 export default class PropertyEditor {
+    static registerType(type,editor){Json.registerType(type,editor);}
+    static get ModalStyles(){return ModalStyles; }
     render(){
         var settings = _.merge(_.cloneDeep(defaultSettings),this.props.settings);
         return (<Json value={this.props.value} settings={settings} onChange={this.props.onChange} /> )

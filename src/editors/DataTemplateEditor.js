@@ -14,7 +14,7 @@ export default class DataTemplateEditor extends React.Component {
         super(props);
         this.state = {
             show: false,
-            value: this.props.value.toJS()
+            value: this.props.value && this.props.value.toJS() || {}
         };
     }
 
