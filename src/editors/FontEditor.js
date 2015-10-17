@@ -1,7 +1,7 @@
 import React from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import _ from 'lodash';
-import Json from 'react-json';
+import Json from 'react-json-fork';
 
 var fontFamilies =[
     'Arial',
@@ -9,7 +9,17 @@ var fontFamilies =[
     'Helvetica',
     'Times New Roman',
     'Courier New',
-    'Papyrus'
+    'Open Sans',
+    'Roboto',
+    'Lato',
+    'Oswald',
+    'Slabo',
+    'Courgette',
+    'Great Vibes',
+    'Patrick Hand',
+    'Indie Flower',
+    'Lobster',
+    'Poiret One'
 ]
 
 var defaultValues = {

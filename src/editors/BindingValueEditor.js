@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import Json from 'react-json';
+import Json from 'react-json-fork';
 
 var defaultValues = {
     value:undefined,

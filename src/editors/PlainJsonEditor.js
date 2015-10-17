@@ -18,7 +18,7 @@ export default class PlainJsonEditor extends React.Component {
     }
 
     open() {
-        this.setState({showModal: true,value:this.props.value});
+        this.setState({showModal: true,value:JSON.stringify(this.props.value, null, 2)});
     }
     handleChange(e) {
         this.setState({value: e.target.value});

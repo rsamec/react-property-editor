@@ -1,5 +1,5 @@
 import React from 'react';
-import Json from 'react-json';
+import Json from 'react-json-fork';
 import _ from 'lodash';
 
 import ColorPickerEditor from './editors/ColorPickerEditor.js';
@@ -15,7 +15,6 @@ import BorderEditor from './editors/BorderEditor.js';
 import PositionEditor from './editors/PositionEditor.js';
 import BindingEditor from './editors/BindingEditor.js';
 import BindingValueEditor from './editors/BindingValueEditor.js';
-import DataTemplateEditor from './editors/DataTemplateEditor.js';
 
 import ModalStyles from './utils/ModalStyles.js';
 
@@ -34,7 +33,6 @@ Json.registerType('borderEditor',BorderEditor);
 Json.registerType('bindingEditor',BindingEditor);
 Json.registerType('bindingValueEditor',BindingValueEditor);
 Json.registerType('dataEditor',JsonEditor);
-Json.registerType('dataTemplateEditor',DataTemplateEditor);
 
 var defaultSettings = {
     form: true,

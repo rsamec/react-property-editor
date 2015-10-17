@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import TruncateString from '../utils/TruncateString.js';
 import {Modal} from 'react-overlays';
-import Json from 'react-json';
+import Json from 'react-json-fork';
 import _ from 'lodash'
 
 import EmptyValue from '../utils/EmptyValue.js';

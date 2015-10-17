@@ -1,43 +1,9 @@
 import _ from 'lodash';
 
-import Core from 'react-designer-widgets';
-import Shapes from 'react-shapes';
-import Chart from 'react-pathjs-chart';
-
 //external widgets with more controls
 var ReactBootstrap = require('react-bootstrap');
 
-var Widgets = {
-
-    'Core.TextBoxInput': Core.TextBoxInput,
-    'Core.CheckBoxInput': Core.CheckBoxInput,
-    'Core.SelectBoxInput': Core.SelectBoxInput,
-    'Core.JSXBox': Core.JSXBox,
-    'Core.TextBox': Core.TextBox,
-    'Core.ValueBox': Core.ValueBox,
-    'Core.HtmlBox': Core.HtmlBox,
-    'Core.ImageBox': Core.ImageBox,
-    'Core.ImagePanel': Core.ImagePanel,
-    'Core.Flipper': Core.Flipper,
-    'Core.TangleNumberText': Core.TangleNumberText,
-    'Core.TangleBoolText': Core.TangleBoolText,
-
-    'Shapes.Rectangle': Shapes.Rectangle,
-    'Shapes.Ellipse': Shapes.Ellipse,
-    'Shapes.Circle': Shapes.Circle,
-    'Shapes.Line': Shapes.Line,
-    'Shapes.Polyline': Shapes.Polyline,
-    'Shapes.CornerBox': Shapes.CornerBox,
-    'Shapes.Triangle':Shapes.Triangle,
-
-    'Chart.Pie': Chart.Pie,
-    'Chart.Bar': Chart.Bar,
-    'Chart.SmoothLine': Chart.SmoothLine,
-    'Chart.StockLine': Chart.StockLine,
-    'Chart.Scatterplot': Chart.Scatterplot,
-    'Chart.Radar': Chart.Radar,
-    'Chart.Tree': Chart.Tree
-}
+var Widgets = {};
 
 var bootstrapWidgets = ['Input', 'Button', 'Panel', 'Glyphicon', 'Tooltip', 'Alert', 'Label'];
 _.each(bootstrapWidgets, function (widgetName) {
