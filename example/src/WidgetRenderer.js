@@ -28,12 +28,12 @@ var WidgetRenderer = React.createClass({
                 if (_.isObject(bindingProps) && !!bindingProps.path) {
                     //apply binding
                     var converter;
-                    if (!!prop.Converter && !!bindingProps.converter.compiled) {
+                    if (!!prop.converter && !!bindingProps.converter.compiled) {
                         converter = eval(bindingProps.converter.compiled);
                     }
                     var binding = this.bindTo(dataBinder, bindingProps.path, converter);
 
-                    if (prop.Mode === 'TwoWay') {
+                    if (prop.mode === 'TwoWay') {
                         //two-way binding
                         //box.valueLink = this.bindTo(dataBinder, bindingProps.path, converter);
                         box[propName] = undefined;
