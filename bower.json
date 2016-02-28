@@ -1,12 +1,12 @@
 {
-  "name": "react-property-editort",
+  "name": "react-property-editor",
+  "version": "0.0.0",
+  "description": "PropertyEditor",
   "main": "dist/react-property-editor.min.js",
-  "version": "0.2.4",
   "homepage": "https://github.com/rsamec/react-property-editor",
   "authors": [
     "Roman Samec"
   ],
-  "description": "React property editor.",
   "moduleType": [
     "amd",
     "globals",

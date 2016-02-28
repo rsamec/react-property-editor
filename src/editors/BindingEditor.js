@@ -5,6 +5,7 @@ import Json from 'react-json-fork';
 var defaultValues = {
     path: undefined,
     converter: undefined,
+    converterArgs:undefined,
     mode: 'OneWay'
 };
 var settings = {

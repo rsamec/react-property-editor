@@ -15,11 +15,15 @@ import BorderEditor from './editors/BorderEditor.js';
 import PositionEditor from './editors/PositionEditor.js';
 import BindingEditor from './editors/BindingEditor.js';
 import BindingValueEditor from './editors/BindingValueEditor.js';
+import BgEditor from './editors/BgEditor';
+import GradientColorPicker  from './editors/GradientColorPickerEditor';
+import WidgetStyleEditor  from './editors/WidgetStyleEditor';
 
 import ModalStyles from './utils/ModalStyles.js';
 
 // Register the type in react-json
 Json.registerType('colorPicker', ColorPickerEditor);
+Json.registerType('gradientColorPicker', GradientColorPicker);
 Json.registerType('htmlEditor', HtmlEditor);
 Json.registerType('codeEditor',CodeEditor);
 Json.registerType('textEditor',PlainTextEditor);
@@ -33,6 +37,8 @@ Json.registerType('borderEditor',BorderEditor);
 Json.registerType('bindingEditor',BindingEditor);
 Json.registerType('bindingValueEditor',BindingValueEditor);
 Json.registerType('dataEditor',JsonEditor);
+Json.registerType('bgEditor',BgEditor);
+Json.registerType('widgetStyleEditor',WidgetStyleEditor);
 
 var defaultSettings = {
     form: true,
@@ -41,6 +47,7 @@ var defaultSettings = {
     editing:true,
     fields:{
         color:{type:'colorPicker'},
+		gradient:{type:'gradientColorPicker'},
         fill:{type:'colorPicker'},
         stroke:{type:'colorPicker'},
         strokeWidth:{type:'number'},
@@ -57,16 +64,26 @@ var defaultSettings = {
         padding:{type:'boxSizeEditor'},
         box:{type:'boxEditor'},
         binding:{type:'bindingEditor'},
-        value:{type:'bindingEditor'}
+        value:{type:'bindingEditor'},
+        background:{type:'bgEditor'}
     }
 };
 
-
-export default class PropertyEditor {
-    static registerType(type,editor){Json.registerType(type,editor);}
-    static get ModalStyles(){return ModalStyles; }
-    render(){
+export default class PropertyEditor extends React.Component {
+	propsChange(value){
+		this.props.onChange({props:value,binding:this.props.value.binding});
+	}
+	bindingChange(value) {
+		this.props.onChange({props: this.props.value.props, binding: value});
+	}
+	render(){
+		var value = this.props.value;
+		var props = value.props;
+		var binding = value.binding;
+		
         var settings = _.merge(_.cloneDeep(defaultSettings),this.props.settings);
-        return (<Json value={this.props.value} settings={settings} onChange={this.props.onChange} /> )
+        return (<Json value={props} binding={binding} settings={settings}  onChange={this.propsChange.bind(this)} onBindingChange={this.bindingChange.bind(this)} /> )
     }
 }
+PropertyEditor.registerType = function(type,editor){Json.registerType(type,editor)};
+PropertyEditor.ModalStyles =  function(){return ModalStyles};
