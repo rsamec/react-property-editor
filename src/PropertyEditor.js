@@ -18,6 +18,7 @@ import BindingValueEditor from './editors/BindingValueEditor.js';
 import BgEditor from './editors/BgEditor';
 import GradientColorPicker  from './editors/GradientColorPickerEditor';
 import WidgetStyleEditor  from './editors/WidgetStyleEditor';
+import GridEditor  from './editors/GridEditor';
 
 import ModalStyles from './utils/ModalStyles.js';
 
@@ -39,6 +40,7 @@ Json.registerType('bindingValueEditor',BindingValueEditor);
 Json.registerType('dataEditor',JsonEditor);
 Json.registerType('bgEditor',BgEditor);
 Json.registerType('widgetStyleEditor',WidgetStyleEditor);
+Json.registerType('gridEditor',GridEditor);
 
 var defaultSettings = {
     form: true,
