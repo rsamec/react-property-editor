@@ -82,8 +82,9 @@ export default class GridEditor extends React.Component {
                 <Modal show={this.state.showModal} onHide={this.close.bind(this)} style={ModalStyles.modalStyle}
                        backdropStyle={ModalStyles.backdropStyle}>
                     <div style={ModalStyles.dialogStyle}>
-						{<SpreadSheet value={this.state.value} settings={this.props.settings} onChange={(data)=> {this.setState({value:data})}} />}
-
+						<div className="excel">
+							<SpreadSheet value={this.state.value} settings={this.props.settings} onChange={(data)=> {this.setState({value:data})}} />
+						</div>
                     </div>
                 </Modal>
             </div>

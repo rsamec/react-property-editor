@@ -19,6 +19,7 @@ import BgEditor from './editors/BgEditor';
 import GradientColorPicker  from './editors/GradientColorPickerEditor';
 import WidgetStyleEditor  from './editors/WidgetStyleEditor';
 import GridEditor  from './editors/GridEditor';
+import PageOptionsEditor  from './editors/PageOptionsEditor';
 
 import ModalStyles from './utils/ModalStyles.js';
 
@@ -41,6 +42,7 @@ Json.registerType('dataEditor',JsonEditor);
 Json.registerType('bgEditor',BgEditor);
 Json.registerType('widgetStyleEditor',WidgetStyleEditor);
 Json.registerType('gridEditor',GridEditor);
+Json.registerType('pageOptionsEditor',PageOptionsEditor);
 
 var defaultSettings = {
     form: true,

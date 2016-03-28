@@ -190,6 +190,7 @@ _.extend(Panel, {
 			background: undefined,
 			styles: undefined,
 			cGrid: undefined,
+			pageOptions:undefined,
 			grid: undefined
 		},
 		settings: {
@@ -215,7 +216,7 @@ _.extend(Panel, {
 									return _.map(_.rest(row,1), function (cell, c) {
 										var c = _.isString(cell) ? cell.replace(",", ".") : cell;
 										var n = parseFloat(c);
-										return {name: name, val: isNaN(n) ? c : n};
+										return {name: name, v: isNaN(n) ? c : n};
 									})
 								})
 							},
@@ -227,7 +228,7 @@ _.extend(Panel, {
 									rows: [headRow].concat(_.map(value, function (row, r) {
 										var name = columns[r];
 										return [name].concat(_.map(row, function (cell, c) {
-											return cell.val;
+											return cell.v;
 										}))
 									}))
 								}
@@ -236,6 +237,7 @@ _.extend(Panel, {
 					}
 				},
 				grid: {type: 'gridEditor'},
+				pageOptions:{type:'pageOptionsEditor'},
 				data: {type: 'jsonEditor'},
 			}
 		}
