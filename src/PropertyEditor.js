@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import ColorPickerEditor from './editors/ColorPickerEditor.js';
 import HtmlEditor from './editors/HtmlEditor.js';
-import CodeEditor from './editors/CodeEditor.js';
+//import CodeEditor from './editors/CodeEditor.js';
 import PlainTextEditor from './editors/PlainTextEditor.js';
 import PlainJsonEditor from './editors/PlainJsonEditor.js';
 import JsonEditor from './editors/JsonEditor.js';
@@ -18,7 +18,7 @@ import BindingValueEditor from './editors/BindingValueEditor.js';
 import BgEditor from './editors/BgEditor';
 import GradientColorPicker  from './editors/GradientColorPickerEditor';
 import WidgetStyleEditor  from './editors/WidgetStyleEditor';
-import GridEditor  from './editors/GridEditor';
+//import GridEditor  from './editors/GridEditor';
 import PageOptionsEditor  from './editors/PageOptionsEditor';
 
 import ModalStyles from './utils/ModalStyles.js';
@@ -27,7 +27,7 @@ import ModalStyles from './utils/ModalStyles.js';
 Json.registerType('colorPicker', ColorPickerEditor);
 Json.registerType('gradientColorPicker', GradientColorPicker);
 Json.registerType('htmlEditor', HtmlEditor);
-Json.registerType('codeEditor',CodeEditor);
+Json.registerType('codeEditor',PlainTextEditor);
 Json.registerType('textEditor',PlainTextEditor);
 Json.registerType('plainJsonEditor',PlainJsonEditor);
 Json.registerType('jsonEditor',JsonEditor);
@@ -41,7 +41,7 @@ Json.registerType('bindingValueEditor',BindingValueEditor);
 Json.registerType('dataEditor',JsonEditor);
 Json.registerType('bgEditor',BgEditor);
 Json.registerType('widgetStyleEditor',WidgetStyleEditor);
-Json.registerType('gridEditor',GridEditor);
+Json.registerType('gridEditor',PlainJsonEditor);
 Json.registerType('pageOptionsEditor',PageOptionsEditor);
 
 var defaultSettings = {
