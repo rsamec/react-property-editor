@@ -13,7 +13,7 @@ export default class PlainJsonEditor extends React.Component {
     }
 
     close() {
-        this.props.onUpdated(JSON.parse(this.state.value));
+		if (!!this.state.value) this.props.onUpdated(JSON.parse(this.state.value));
         this.setState({showModal: false});
     }
 

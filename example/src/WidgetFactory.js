@@ -191,7 +191,9 @@ _.extend(Panel, {
 			styles: undefined,
 			cGrid: undefined,
 			pageOptions:undefined,
-			grid: undefined
+			grid: undefined,
+			html:undefined,
+			code:undefined
 		},
 		settings: {
 			fields: {
@@ -239,6 +241,8 @@ _.extend(Panel, {
 				grid: {type: 'gridEditor'},
 				pageOptions:{type:'pageOptionsEditor'},
 				data: {type: 'jsonEditor'},
+				html: {type: 'htmlEditor'},
+				code: {type: 'codeEditor'}
 			}
 		}
 	}

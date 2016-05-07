@@ -13,16 +13,19 @@ const options = [
 
 const DEFAULT_STOPS = [
 	{
-		"offset": 0,
-		"color": "#00f"
+		offset: 0,
+		color: "#f7ff00",
+		opacity: 1.0
 	},
 	{
-		"offset": 0.5,
-		"color": "#aaa"
+		offset: 0.5,
+		color: "#db36a4",
+		opacity: 1.0
 	},
 	{
-		"offset": 1,
-		"color": "#f00"
+		offset: 1,
+		color: "#f00",
+		opacity: 1.0
 	}];
 
 export default class GradientColorPickerEditor extends React.Component {
@@ -31,6 +34,7 @@ export default class GradientColorPickerEditor extends React.Component {
 	}
 
 	handleChangeGrandient(stops) {
+		stops = _.map(stops,function(stop){ return _.omit(stop,['idx','x'])});
 		this.props.onUpdated(_.extend(_.clone(this.props.value) || {}, {stops: stops}));
 	}
 

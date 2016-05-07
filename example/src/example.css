@@ -544,23 +544,53 @@ label {
   padding: 0 0;
   position: relative;
 }
-.gc-canvas {
+.gc-container .react-colorpicker-trigger {
+  width: 20px;
+  height: 20px;
+}
+.gc-container .gc-canvas {
   width: 100%;
   height: 20px;
   background-color: white;
 }
-.gc-handler {
+.gc-container svg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.gc-container canvas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.gc-container .gc-handler {
   fill: white;
   stroke: gray;
   fill-opacity: 0.7;
   cursor: move;
 }
-.gc-colorpicker {
+.gc-container .gc-colorpicker {
   position: absolute;
 }
+.gc-colorpicker .remove-btn {
+  position: relative;
+  position: absolute;
+  top: 15px;
+  left: 4px;
+  cursor: pointer;
+  opacity: 0;
+}
+.gc-colorpicker:hover .remove-btn {
+  opacity: 1;
+}
+.react-colorpicker {
+  border: 1px solid #999;
+  padding: 0px;
+  border-radius: 2px;
+}
 .react-colorpicker-trigger {
-  width: 20px;
-  height: 20px;
+  border: 0px;
+  margin-bottom: -2px;
 }
 /* JSON Editor */
 .jsonEditor * {
