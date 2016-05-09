@@ -33,8 +33,8 @@ export default class CodeEditor extends React.Component {
         this.setState({showModal: true});
     }
 
-     handleChange(e) {
-         this.setState({value: e.target.value});
+     handleChange(newCode) {
+         this.setState({value: newCode});
      }
      componentWillReceiveProps(nextProps) {
          this.setState({value:  nextProps.value && nextProps.value.code || '' });

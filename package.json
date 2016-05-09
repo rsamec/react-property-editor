@@ -1,6 +1,6 @@
 {
   "name": "react-property-editor",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "PropertyEditor",
   "main": "lib/PropertyEditor.js",
   "author": "Roman Samec",
@@ -20,7 +20,7 @@
     "react-json-fork": "0.0.2",
     "react-overlays": "^0.5.4",
     "react-tinymce": "^0.4.0",
-    "react-codemirror":"^0.2.6"
+    "react-codemirror": "^0.2.6"
   },
   "devDependencies": {
     "react-binding": "^0.7.3",
